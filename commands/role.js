@@ -2,6 +2,7 @@ const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 const dbTables = require("../utils/database");
 const logger = require("../utils/logger");
 const isValidHex = require("../utils/isValidHex");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("role")
@@ -64,7 +65,30 @@ module.exports = {
           await interaction.member.roles.add(role);
           await interaction.reply(`${role} created.`);
         } else {
-          const role = await interaction.guild.roles.fetch(currentRole.role_id);
+          let role = await interaction.guild.roles.fetch(currentRole.role_id);
+
+          if (!role) {
+            // create a new role
+            role = await interaction.guild.roles.create({
+              name: interaction.user.username,
+              colors: {
+                primaryColor: !interaction.options.getString("primary_colour")
+                  ? undefined
+                  : `${interaction.options.getString("primary_colour") && !interaction.options.getString("primary_colour").charAt(0) !== "#" ? "#" : ""}${interaction.options.getString(
+                      "primary_colour",
+                    )}`,
+                secondaryColor: !interaction.options.getString(
+                  "secondary_colour",
+                )
+                  ? null
+                  : `${interaction.options.getString("secondary_colour") && !interaction.options.getString("secondary_colour").charAt(0) !== "#" ? "#" : ""}${interaction.options.getString(
+                      "secondary_colour",
+                    )}`,
+              },
+              reason: `Role created for ${interaction.user.username}`,
+            });
+            await currentRole.update({ role_id: role.id });
+          }
           if (!interaction.member.roles.cache.has(role.id)) {
             await interaction.member.roles.add(role);
           }
