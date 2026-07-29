@@ -3,10 +3,6 @@ const {
   SlashCommandBuilder,
   MessageFlags,
   ContainerBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-  ComponentType,
-  MediaGalleryBuilder,
 } = require("discord.js");
 const logger = require("../utils/logger");
 const { bggToken, defaultColour } = require("../utils/config");
@@ -21,11 +17,17 @@ module.exports = {
         .setName("search_string")
         .setDescription("The string to search")
         .setRequired(true),
+    )
+    .addBooleanOption((option) =>
+      option
+        .setName("exact")
+        .setDescription("Should it be an exact match?")
+        .setRequired(false),
     ),
   async execute(interaction) {
     try {
       const res = await fetch(
-        `https://boardgamegeek.com/xmlapi2/search?type=boardgame&exact=0&query=${interaction.options.getString("search_string").replaceAll(" ", "%20")}`,
+        `https://boardgamegeek.com/xmlapi2/search?type=boardgame&exact=${!interaction.options.getBoolean("exact") || interaction.options.getBoolean("exact") !== false ? true : false}&query=${interaction.options.getString("search_string").toLowerCase().replaceAll(" ", "%20")}`,
         {
           headers: {
             Authorization: `Bearer ${bggToken}`,
