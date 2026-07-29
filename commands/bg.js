@@ -3,10 +3,6 @@ const {
   SlashCommandBuilder,
   MessageFlags,
   ContainerBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-  ComponentType,
-  MediaGalleryBuilder,
 } = require("discord.js");
 const logger = require("../utils/logger");
 const { bggToken, defaultColour } = require("../utils/config");
@@ -21,11 +17,17 @@ module.exports = {
         .setName("search_string")
         .setDescription("The string to search")
         .setRequired(true),
+    )
+    .addBooleanOption((option) =>
+      option
+        .setName("exact")
+        .setDescription("Should it be an exact match?")
+        .setRequired(false),
     ),
   async execute(interaction) {
     try {
       const res = await fetch(
-        `https://boardgamegeek.com/xmlapi2/search?type=boardgame&exact=0&query=${interaction.options.getString("search_string").replaceAll(" ", "%20")}`,
+        `https://boardgamegeek.com/xmlapi2/search?type=boardgame&exact=${!interaction.options.getBoolean("exact") || interaction.options.getBoolean("exact") !== false ? true : false}&query=${interaction.options.getString("search_string").toLowerCase().replaceAll(" ", "%20")}`,
         {
           headers: {
             Authorization: `Bearer ${bggToken}`,
@@ -44,9 +46,12 @@ module.exports = {
       let gameId;
       let gameName;
       let yearPublished;
+      let description;
       if (!Array.isArray(bggData.items.item)) {
         gameId = bggData.items.item["@_id"];
         gameName = bggData.items.item.name["@_value"];
+        yearPublished = bggData.items.item["yearpublished"];
+        description = bggData.items.item["description"];
       } else {
         const lowestItem = bggData.items.item
           .filter(
@@ -64,6 +69,7 @@ module.exports = {
         gameId = lowestItem["@_id"];
         gameName = lowestItem.name["@_value"];
         yearPublished = lowestItem["yearpublished"];
+        description = lowestItem["description"];
       }
 
       if (!gameId) {
@@ -85,10 +91,10 @@ module.exports = {
       const thingXmlData = await thingResponse.text();
 
       const thingData = parser.parse(thingXmlData);
-      console.log("thingdata", thingData);
+
       const responseText = [
         `### [${gameName} (${yearPublished})](<https://boardgamegeek.com/boardgame/${gameId}>)`,
-        `> ...`,
+        `> ${description}`,
       ];
       if (Array.isArray(bggData.items.item) && bggData.items.item.length > 1) {
         responseText.push(
