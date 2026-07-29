@@ -44,9 +44,12 @@ module.exports = {
       let gameId;
       let gameName;
       let yearPublished;
+      let description;
       if (!Array.isArray(bggData.items.item)) {
         gameId = bggData.items.item["@_id"];
         gameName = bggData.items.item.name["@_value"];
+        yearPublished = bggData.items.item["yearpublished"];
+        description = bggData.items.item["description"];
       } else {
         const lowestItem = bggData.items.item
           .filter(
@@ -64,6 +67,7 @@ module.exports = {
         gameId = lowestItem["@_id"];
         gameName = lowestItem.name["@_value"];
         yearPublished = lowestItem["yearpublished"];
+        description = lowestItem["description"];
       }
 
       if (!gameId) {
@@ -85,10 +89,10 @@ module.exports = {
       const thingXmlData = await thingResponse.text();
 
       const thingData = parser.parse(thingXmlData);
-      console.log("thingdata", thingData);
+
       const responseText = [
         `### [${gameName} (${yearPublished})](<https://boardgamegeek.com/boardgame/${gameId}>)`,
-        `> ...`,
+        `> ${description}`,
       ];
       if (Array.isArray(bggData.items.item) && bggData.items.item.length > 1) {
         responseText.push(
