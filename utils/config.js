@@ -9,5 +9,6 @@ module.exports = {
     key: process.env.TMDB_KEY || undefined,
     token: process.env.TMDB_TOKEN || undefined,
   },
+  bggToken: process.env.BGG_TOKEN || undefined,
   defaultColour: 0xffd1a5,
 };

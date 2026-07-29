@@ -2,6 +2,7 @@ const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 const dbTables = require("../utils/database");
 const logger = require("../utils/logger");
 const isValidHex = require("../utils/isValidHex");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("role")
