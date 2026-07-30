@@ -13,8 +13,8 @@ const { tmdb, defaultColour } = require("../utils/config");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("tmdb")
-    .setDescription("Search for a movie or tv show")
+    .setName("watch")
+    .setDescription("Search for a movie or tv show, rate it or queue it.")
     .addStringOption((option) =>
       option
         .setName("search_type")
