@@ -10,8 +10,8 @@ const { XMLParser } = require("fast-xml-parser");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("bg")
-    .setDescription("Search for a board game")
+    .setName("play")
+    .setDescription("Search for a board game, rate it or queue it.")
     .addStringOption((option) =>
       option
         .setName("search_string")
