@@ -74,7 +74,11 @@ const dbTables = {
     watched_with: {
       type: DataTypes.JSON,
       allowNull: true
-    }
+    },
+      comments: {
+      type: DataTypes.JSON,
+      allowNull: true
+    },
   }),
   PlayList: sequelize.define("PlayList", {
     user_id: {
@@ -106,7 +110,11 @@ const dbTables = {
     played_with: {
       type: DataTypes.JSON,
       allowNull: true
-    }
+    },
+    comments: {
+      type: DataTypes.JSON,
+      allowNull: true
+    },
   }),
 };
 
