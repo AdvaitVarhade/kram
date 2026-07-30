@@ -4,6 +4,7 @@ module.exports = {
   channels: {
     welcome: "1521811800713068645",
     development: "1521698516819251272",
+    botLogs: "1529025931195191326",
   },
   tmdb: {
     key: process.env.TMDB_KEY || undefined,

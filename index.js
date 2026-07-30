@@ -47,6 +47,8 @@ const client = new Client({
 client.commands = new Collection();
 client.afk = new Collection();
 
+client.on(event.name, (...args) => event.execute(...args, client));
+
 /* Setup commands */
 const commandsPath = path.join(__dirname, "commands");
 
