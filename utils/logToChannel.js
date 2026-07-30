@@ -21,7 +21,7 @@ module.exports = (msg, client, severity = "info") => {
     const logContainer = new ContainerBuilder()
         .setAccentColor(!severityColours[severity] ? severityColours.default : severityColours[severity])
         .addTextDisplayComponents((textDisplay) => textDisplay
-            .setContent(`${!severityIcons[severity] ? severityIcons.default : severityIcons[severity]}]n\`\`\`${msg}\`\`\``)
+            .setContent(`${!severityIcons[severity] ? severityIcons.default : severityIcons[severity]}\n\`\`\`${msg}\`\`\``)
         );
     
     const logChannel = client.channels.cache.get(channels.logChannel);
