@@ -134,7 +134,8 @@ module.exports = {
         );
       }
 */
-      const response = await interaction.reply({
+      // const response =
+      await interaction.reply({
         components: [responseContainer],
         flags: MessageFlags.IsComponentsV2,
         withResponse: true,

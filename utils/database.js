@@ -45,7 +45,7 @@ const dbTables = {
     },
     item_id: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     count: {
       type: DataTypes.INTEGER,
@@ -65,19 +65,19 @@ const dbTables = {
     },
     last_watch: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
     },
     watched_with: {
       type: DataTypes.JSON,
-      allowNull: true
+      allowNull: true,
     },
-      comments: {
+    comments: {
       type: DataTypes.JSON,
-      allowNull: true
+      allowNull: true,
     },
   }),
   PlayList: sequelize.define("PlayList", {
@@ -89,7 +89,7 @@ const dbTables = {
     },
     item_id: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     count: {
       type: DataTypes.INTEGER,
@@ -101,19 +101,19 @@ const dbTables = {
     },
     last_play: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
     },
     played_with: {
       type: DataTypes.JSON,
-      allowNull: true
+      allowNull: true,
     },
     comments: {
       type: DataTypes.JSON,
-      allowNull: true
+      allowNull: true,
     },
   }),
 };
