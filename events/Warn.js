@@ -7,6 +7,6 @@ module.exports = {
   name: Events.Warn,
   async execute(m, client) {
     logger.warn(m);
-    logToChannel(m,client,"warn");
+    logToChannel(m, client, "warn");
   },
 };

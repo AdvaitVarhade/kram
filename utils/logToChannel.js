@@ -3,7 +3,6 @@ const { channels, defaultColour } = require("./config");
 const logger = require("./logger");
 
 module.exports = (msg, client, severity = "info") => {
-
     const severityColours = {
         default: defaultColour,
         success: Colors.Green,

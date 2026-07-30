@@ -47,8 +47,6 @@ const client = new Client({
 client.commands = new Collection();
 client.afk = new Collection();
 
-client.on(event.name, (...args) => event.execute(...args, client));
-
 /* Setup commands */
 const commandsPath = path.join(__dirname, "commands");
 
@@ -79,9 +77,9 @@ for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);
   const event = require(filePath);
   if (event.once) {
-    client.once(event.name, (...args) => event.execute(...args));
+    client.once(event.name, (...args) => event.execute(...args, client));
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(event.name, (...args) => event.execute(...args, client));
   }
 }
 

@@ -6,8 +6,7 @@ const logToChannel = require("../utils/logToChannel.js");
 module.exports = {
   name: Events.Error,
   async execute(m, client) {
-   
     logger.error(m, `Error Event`);
-     logToChannel(m,client,"danger");
+    logToChannel(m, client, "danger");
   },
 };
